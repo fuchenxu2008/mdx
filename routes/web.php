@@ -11,10 +11,18 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'PostsController@index');
+
+Route::get('/posts/{post}', 'PostsController@show');
+
+Route::post('/posts/create', 'PostsController@store');
+
+Route::delete('/posts/{post}', 'PostsController@destroy');
+
+Route::get('/chat', 'PagesController@chat');
+
+Route::get('/liked', 'PagesController@liked');
+
+Route::get('/me', 'PagesController@profile');
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

@@ -1,9 +1,20 @@
 
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
+@import url("https://at.alicdn.com/t/font_436052_62wx24zon1smj9k9.css");
+@import "../../../public/css/Source+Sans+Pro.css";
 
 // Variables
-@import "variables";
+// @import "variables";
 
 // Bootstrap
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
+
+// Swiper
+@import "swiper-3.4.2.min";
+
+// Homepage
+@import "homepage";
+
+// UploadImg
+@import "uploadImg";

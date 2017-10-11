@@ -4,10 +4,12 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
-
+require('./jquery1.10.2.min');
 require('./bootstrap');
+require('./bootstrap.min');
 
 window.Vue = require('vue');
+// const Compress = require('compress.js');
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -17,6 +19,12 @@ window.Vue = require('vue');
 
 Vue.component('example', require('./components/Example.vue'));
 
-const app = new Vue({
-    el: '#app'
-});
+// const app = new Vue({
+//     el: '#app'
+// });
+require('./swiper-3.4.2.jquery.min');
+require('./swiper-3.4.2.min');
+require('./clipboard.min');
+require('./fontawesome');
+require('./imgUpload');
+require('./index');
