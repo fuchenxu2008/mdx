@@ -1,11 +1,11 @@
-
-<div class="container">
+<?php $__env->startSection('content'); ?>
+<div class="container" style="color: grey;">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <div class="">
+            <div class="panel panel-default">
                 <div class="panel-heading">Login</div>
 
-                <div class="">
+                <div class="panel-body">
                     <form class="form-horizontal" method="POST" action="<?php echo e(route('login')); ?>">
                         <?php echo e(csrf_field()); ?>
 
@@ -57,6 +57,10 @@
                                 <a class="btn btn-link" href="<?php echo e(route('password.request')); ?>">
                                     Forgot Your Password?
                                 </a>
+
+                                <a class="btn btn-link" href="<?php echo e(route('register')); ?>">
+                                    Register
+                                </a>
                             </div>
                         </div>
                     </form>
@@ -65,4 +69,6 @@
         </div>
     </div>
 </div>
+<?php $__env->stopSection(); ?>
 
+<?php echo $__env->make('layouts.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

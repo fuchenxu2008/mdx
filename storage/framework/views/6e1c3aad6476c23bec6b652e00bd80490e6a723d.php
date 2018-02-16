@@ -1,11 +1,11 @@
 <?php $__env->startSection('content'); ?>
-<div class="container">
+<div class="container" style="color: grey;">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <div class="">
+            <div class="panel panel-default">
                 <div class="panel-heading">Register</div>
 
-                <div class="">
+                <div class="panel-body">
                     <form class="form-horizontal" method="POST" action="<?php echo e(route('register')); ?>">
                         <?php echo e(csrf_field()); ?>
 
@@ -65,6 +65,10 @@
                                 <button type="submit" class="btn btn-primary">
                                     Register
                                 </button>
+
+                                <a class="btn btn-link" href="<?php echo e(route('login')); ?>">
+                                    Login
+                                </a>
                             </div>
                         </div>
                     </form>

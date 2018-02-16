@@ -11,37 +11,36 @@
     <!-- End Search Bar -->
 
     
-    <div class="modal fade" id="create_post_btn" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+    <div class="modal fade animated slideInUp" id="create_post_modal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id=""></h4>
-                </div>
-                <div class="modal-body">
-                    <?php echo Form::open(array('action' => 'PostsController@store', 'method' => 'POST', 'enctype'=>'multipart/form-data', 'files' => true)); ?>
-
-                    <?php echo e(Form::text('title', 'test', ['class' => 'form-control', 'placeholder' => 'Title'])); ?>
-
-                    <?php echo e(Form::textarea('body', 'test', ['class' => 'form-control', 'placeholder' => 'Body'])); ?>
-
-                    <div id="upBox">
-                        <div id="inputBox">
-                            
-                            
-                            
-                            <?php echo Form::file('images[]', array('multiple'=>true, 'id' => 'file')); ?>
-
-                            
-                            点击选择图片
-                        </div>
-                        <div id="imgBox"></div>
-                        
+                <div class="container">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h3 class="modal-title" id="">Put Your Goods On Sale</h3>
                     </div>
+                    <div class="modal-body">
+                        <?php echo Form::open(array('id' => 'new_post_form', 'action' => 'PostsController@store', 'method' => 'POST', 'enctype'=>'multipart/form-data', 'files' => true)); ?>
+
+                        <div class="textFormGroup">
+                            <?php echo e(Form::text('title', '', ['id' => 'post_title', 'class' => 'form-control', 'placeholder' => 'Title', 'required' => 'true'])); ?>
+
+                            
+                            <?php echo e(Form::textarea('body', '', ['id' => 'post_body', 'class' => 'form-control', 'placeholder' => 'Body', 'rows' => '4', 'required' => 'true'])); ?>
+
+                        </div>
+                        <div id="upBox">
+                            <div id="inputBox">
+                                <?php echo Form::file('images[]', array('multiple'=>true, 'id' => 'file')); ?>
+
+                                Add Photos
+                            </div>
+                            <div id="imgBox"></div>
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <?php echo e(Form::submit('Publish', ['class' => 'btn btn-primary'])); ?>
+                        <button type="button" class="dismissBtn pull-left" data-dismiss="modal">Close</button>
+                        <?php echo e(Form::submit('Publish', ['class' => 'confirmBtn pull-right'])); ?>
 
                         <?php echo Form::close(); ?>
 
@@ -49,7 +48,8 @@
                 </div>
             </div>
         </div>
-        
+    </div>
+    
 
         <!-- Big Banner -->
         <div>
@@ -111,27 +111,37 @@
                     <div class="post container">
                         <!-- User -->
                         <div class="post_user">
-                            <img src="<?php echo e(asset('pic/logo2.JPG')); ?>" alt="logo"> <?php echo e($post->user->name); ?>
+                            <img src="/storage/avatar_images/<?php echo e($post->user->avatar); ?>" alt="logo"> <?php echo e($post->user->name); ?>
 
                         </div>
-                        <div class="post_content" onclick="window.location.href='/posts/<?php echo e($post->id); ?>'">
+                        <div class="post_content">
                             <!-- Post Text -->
-                            <p class="post_text"><?php echo e($post->title); ?></p>
+                            <p class="post_text" onclick="window.location.href='/posts/<?php echo e($post->id); ?>'"><?php echo e($post->title); ?></p>
                             <!-- Post Img -->
                             <?php if(count(json_decode($post->images)) > 0): ?>
-                                <?php $__currentLoopData = json_decode($post->images); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $img): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                    <img src="/storage/posts_images/<?php echo e($img); ?>" alt="demo">
-                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <div class="container row post-gallery" style="padding-right:30px;"  itemscope itemtype="mdx.kyrie.top">
+                                    <?php $__currentLoopData = json_decode($post->images); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $img): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <figure class='img-wrap col-xs-4'>
+                                            <div class="img-container">
+                                                <a href="/storage/posts_images/<?php echo e($img); ?>" itemprop="contentUrl" data-size="<?php echo e(explode('_', explode('.', $img)[0])[2]); ?>" data-index="<?php echo e($index); ?>">
+                                                    <img src="/storage/posts_images/thumb_<?php echo e($img); ?>" itemprop="thumbnail" alt="post_img">
+                                                </a>
+                                            </div>
+                                        </figure>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </div>
                             <?php endif; ?>
                             <!-- Interactive button -->
                         </div>
                         <div class="post_btn row">
                             <div class="col-xs-3 text-left"><p>view: </p></div>
                             <div class="col-xs-9 text-right">
-                                <button name="like"><i class="iconfont icon-like"></i>
-                                    <text><?php echo e($post->likes); ?></text>
+                                <button class="like_btn" name="like" value="<?php echo e($post->id); ?>">
+                                    <i class="iconfont icon-like"></i>
+                                    <text id="likes_count_<?php echo e($post->id); ?>"><?php echo e($post->likes); ?></text>
                                 </button>
-                                <button name="comment"><i class="iconfont icon-comment"></i>
+                                <button class="comment_btn" name="comment" value="<?php echo e($post->id); ?>">
+                                    <i class="iconfont icon-comment"></i>
                                     <text><?php echo e($post->comment); ?></text>
                                 </button>
                             </div>
@@ -139,10 +149,75 @@
                     </div>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             <?php else: ?>
-                <p>There is no posts.</p>
+                <div id="noposts_board" class="container text-center">
+                    <p id="noposts_text">🛒 There is no post.</p>
+                </div>
             <?php endif; ?>
+
+            <!-- Root element of PhotoSwipe. Must have class pswp. -->
+            <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+                <!-- Background of PhotoSwipe.
+                It's a separate element as animating opacity is faster than rgba(). -->
+                <div class="pswp__bg"></div>
+                <!-- Slides wrapper with overflow:hidden. -->
+                <div class="pswp__scroll-wrap">
+                    <!-- Container that holds slides.
+                    PhotoSwipe keeps only 3 of them in the DOM to save memory.
+                    Don't modify these 3 pswp__item elements, data is added later on. -->
+                    <div class="pswp__container">
+                        <div class="pswp__item"></div>
+                        <div class="pswp__item"></div>
+                        <div class="pswp__item"></div>
+                    </div>
+                    <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+                    <div class="pswp__ui pswp__ui--hidden">
+                        <div class="pswp__top-bar">
+                            <!--  Controls are self-explanatory. Order can be changed. -->
+                            <div class="pswp__counter"></div>
+                            <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+                            <button class="pswp__button pswp__button--share" title="Share"></button>
+                            <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+                            <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+                            <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                            <!-- element will get class pswp__preloader--active when preloader is running -->
+                            <div class="pswp__preloader">
+                                <div class="pswp__preloader__icn">
+                                    <div class="pswp__preloader__cut">
+                                        <div class="pswp__preloader__donut"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                            <div class="pswp__share-tooltip"></div>
+                        </div>
+                        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                        </button>
+                        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                        </button>
+                        <div class="pswp__caption">
+                            <div class="pswp__caption__center"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+
         </section>
         <!-- End Recent Items -->
+        <?php echo $__env->make('inc.tabbar', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
     <?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('script'); ?>
+    
+    <script src="<?php echo e(asset('js/index.js')); ?>"></script>
+
+    <script type="text/javascript">
+
+
+    </script>
+<?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

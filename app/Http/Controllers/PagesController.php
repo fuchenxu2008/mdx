@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 
 class PagesController extends Controller
 {
-    public function index()
-    {
-        return view('pages.home');
-    }
+    // public function index()
+    // {
+    //     return view('pages.home');
+    // }
+    // Taken over by PostsController
 
     public function chat()
     {
@@ -21,8 +23,9 @@ class PagesController extends Controller
         return view('pages.liked');
     }
 
-    public function profile()
-    {
-        return view('pages.profile');
-    }
+    // public function profile()
+    // {
+    //     return view('pages.profile');
+    // }
+    // Taken over by ProfileController
 }

@@ -2,13 +2,17 @@
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
 @import url("https://at.alicdn.com/t/font_436052_62wx24zon1smj9k9.css");
-@import "../../../public/css/Source+Sans+Pro.css";
+@import "Source+Sans+Pro.css";
 
 // Variables
 // @import "variables";
 
 // Bootstrap
 @import "~bootstrap-sass/assets/stylesheets/bootstrap";
+
+// PhotoSwipe
+@import "~photoswipe/dist/photoswipe.css";
+@import "~photoswipe/dist/default-skin/default-skin.css";
 
 // Swiper
 @import "swiper-3.4.2.min";
@@ -18,3 +22,9 @@
 
 // UploadImg
 @import "uploadImg";
+
+// Loader
+@import "loader";
+
+// Animate
+@import "animate";

@@ -1,11 +1,12 @@
 #upBox{
     text-align: center;
     width:100%;
-    padding: 20px;
-    border: 1px solid #666;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    // border: 1px solid #666;
     margin: auto;
-    margin-top: 15px;
-    margin-bottom: 20px;
+    // margin-top: 15px;
+    // margin-bottom: 20px;
     position: relative;
     border-radius: 10px;
 }
@@ -37,16 +38,16 @@
 .imgContainer{
     display: inline-block;
     width: 32%;
-    height: 150px;
+    height: 90px;
     margin-left: 1%;
     border: 1px solid #666666;
     position: relative;
-    margin-top: 30px;
+    margin-top: 20px;
     box-sizing: border-box;
 }
 .imgContainer img{
     width: 100%;
-    height: 150px;
+    height: 87.91px;
     cursor: pointer;
 }
 .imgContainer p{
